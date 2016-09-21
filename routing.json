@@ -1,0 +1,14 @@
+[
+	{
+		"path": "sitemap.xml",
+		"controller": "controllers\\sitemap@build",
+		"method":"get",
+		"absolute" : true
+	},
+	{
+		"path": "robots.txt",
+		"controller": "controllers\\robots@build",
+		"method":"get",
+		"absolute" : true
+	}
+]

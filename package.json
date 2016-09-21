@@ -1,0 +1,6 @@
+{
+	"permissions": "*",
+	"routing": "routing.json",
+	"autoload":"autoloader.json",
+	"dependencies": ["base"]
+}

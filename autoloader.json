@@ -1,0 +1,20 @@
+{
+	"files":[
+		{
+			"classes":["controller"],
+			"file":"libraries/mvc/controller.php"
+		},
+		{
+			"classes":["item"],
+			"file":"libraries/sitemap/item.php"
+		},
+		{
+			"classes":["controllers\\sitemap"],
+			"file":"controllers/sitemap.php"
+		},
+		{
+			"classes":["controllers\\robots"],
+			"file":"controllers/robots.php"
+		}
+	]
+}
