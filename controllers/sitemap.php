@@ -36,7 +36,7 @@ class sitemap extends controller{
 				$code .= "\t<priority>{$priority}</priority>\n";
 			}
 			if($lastmodified){
-				$code .= "\t<lastmodified>{$lastmodified}</lastmodified>\n";
+				$code .= "\t<lastmod>{$lastmodified}</lastmod>\n";
 			}
 			$code .= "</url>\n";
 		}
