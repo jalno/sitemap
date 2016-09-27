@@ -1,6 +1,7 @@
 <?php
 namespace packages\sitemap;
 use \packages\base;
+use \packages\base\date;
 class item{
 	const always = 'always';
 	const hourly = 'hourly';
@@ -11,13 +12,18 @@ class item{
 	const never = 'never';
 
 	private $url;
+	private $uri;
 	private $changefreq;
 	private $lastmodified;
 	public function setURL($url){
 		$this->url = $url;
+		$this->uri = base\url($this->url, array(), true);
+	}
+	public function setURI($uri){
+		$this->uri = $uri;
 	}
 	public function getURI(){
-		return base\url($this->url, array(), true);
+		return  $this->uri;
 	}
 	public function SetChangeFreq($changefreq){
 		if(in_array($changefreq, array(
