@@ -10,7 +10,7 @@ class robots extends controller{
 		$this->getRobots();
 
 		$this->response->setMimeType('text/plain');
-		$code = 'Sitemap: '.base\url('sitemap.xml', array('lang' => ''), true)."\n";
+		$code = 'Sitemap: '.base\url('sitemap.xml', array('@lang' => ''), true)."\n";
 		foreach($this->items as $item){
 			if($item['type'] == 'disallow'){
 				$code .= "User-agent: {$item['user-agent']}\n";
