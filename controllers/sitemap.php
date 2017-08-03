@@ -2,11 +2,18 @@
 namespace packages\sitemap\controllers;
 use \packages\base\packages;
 use \packages\base\json;
+use \packages\base\http;
+use \packages\base\events;
 use \packages\sitemap\item;
 use \packages\sitemap\controller;
+use \packages\sitemap\events\sitemap as SitemapEvent;
+use \packages\sitemap\FileException;
+use \packages\sitemap\JsonParseException;
 class sitemap extends controller{
+	protected $allowedDomains = [];
 	protected $items = array();
 	public function build(){
+		$this->addAllowedDomain(http::$request['hostname']);
 		$this->getSiteMaps();
 
 		$this->response->setMimeType('text/xml');
@@ -44,7 +51,21 @@ class sitemap extends controller{
 		$this->response->rawOutput($code);
 		return $this->response;
 	}
+	private function sendEvent(){
+		$event = new SitemapEvent();
+		events::trigger($event);
+		foreach($event->getFiles() as $file){
+			$this->importSitemapFromFile($file);
+		}
+		foreach($event->getItems() as $item){
+			if($item->isAllowedByDomain($this->allowedDomains)){
+				$this->items[] = $item;
+
+			}
+		}
+	}
 	public function getSiteMaps(){
+		$this->sendEvent();
 		$packages = packages::get();
 		foreach($packages as $package){
 			if($sitemapOption = $package->getOption('sitemap')){
@@ -66,7 +87,9 @@ class sitemap extends controller{
 									if(is_array($items)){
 										foreach($items as $item){
 											if($item instanceof item){
-												$this->items[] = $item;
+												if($item->isAllowedByDomain($this->allowedDomains)){
+													$this->items[] = $item;
+												}
 											}else{
 												throw new \Exception;
 											}
@@ -105,17 +128,27 @@ class sitemap extends controller{
 							if(isset($citem['priority'])){
 								$item->setPriority($citem['priority']);
 							}
-							$this->items[] = $item;
+							if($item->isAllowedByDomain($this->allowedDomains)){
+								$this->items[] = $item;
+							}
 						}
 					}else{
 						throw new \Exception();
 					}
 				}
 			}else{
-				throw new \Exception();
+				throw new JsonParseException();
 			}
 		}else{
-			throw new \Exception();
+			throw new FileException();
+		}
+	}
+	protected function addAllowedDomain(string $domain){
+		if(substr($domain, 0, 4) == "www."){
+			$domain = substr($domain, 4);
+		}
+		if(!in_array($domain, $this->allowedDomains)){
+			$this->allowedDomains[] = $domain;
 		}
 	}
 }

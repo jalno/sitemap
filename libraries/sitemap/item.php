@@ -17,7 +17,7 @@ class item{
 	private $lastmodified;
 	public function setURL($url){
 		$this->url = $url;
-		$this->uri = base\url($this->url, array(), true);
+		$this->uri = base\url($this->url, array('@hostname' => ''), true);
 	}
 	public function setURI($uri){
 		$this->uri = $uri;
@@ -69,5 +69,12 @@ class item{
 	}
 	public function getPriority(){
 		return $this->priority;
+	}
+	public function isAllowedByDomain(array $domains){
+		$domain = parse_url($this->uri, PHP_URL_HOST);
+		if(substr($domain, 0, 4) == 'www.'){
+			$domain = substr($domain, 4);
+		}
+		return in_array($domain, $domains);
 	}
 }

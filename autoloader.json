@@ -9,6 +9,18 @@
 			"file":"libraries/sitemap/item.php"
 		},
 		{
+			"classes":["FileException"],
+			"file":"libraries/exceptions/FileException.php"
+		},
+		{
+			"classes":["JsonParseException"],
+			"file":"libraries/exceptions/JsonParseException.php"
+		},
+		{
+			"classes":["events\\sitemap"],
+			"file":"libraries/events/sitemap.php"
+		},
+		{
 			"classes":["controllers\\sitemap"],
 			"file":"controllers/sitemap.php"
 		},
