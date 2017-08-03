@@ -3,12 +3,14 @@
 		"path": "sitemap.xml",
 		"controller": "controllers\\sitemap@build",
 		"method":"get",
-		"absolute" : true
+		"absolute" : true,
+		"domain":"*"
 	},
 	{
 		"path": "robots.txt",
 		"controller": "controllers\\robots@build",
 		"method":"get",
-		"absolute" : true
+		"absolute" : true,
+		"domain":"*"
 	}
 ]
