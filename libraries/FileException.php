@@ -1,3 +1,7 @@
 <?php
+
 namespace packages\sitemap;
-class FileException extends \Exception{}
+
+class FileException extends \Exception
+{
+}

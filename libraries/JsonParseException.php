@@ -1,3 +1,7 @@
 <?php
+
 namespace packages\sitemap;
-class JsonParseException extends \Exception{}
+
+class JsonParseException extends \Exception
+{
+}
