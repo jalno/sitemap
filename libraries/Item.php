@@ -1,8 +1,8 @@
 <?php
 namespace packages\sitemap;
 use \packages\base;
-use \packages\base\date;
-class item{
+use \packages\base\Date;
+class Item{
 	const always = 'always';
 	const hourly = 'hourly';
 	const daily = 'daily';
@@ -15,6 +15,7 @@ class item{
 	private $uri;
 	private $changefreq;
 	private $lastmodified;
+	private $priority;
 	public function setURL($url){
 		$this->url = $url;
 		$this->uri = base\url($this->url, array('@hostname' => ''), true);
@@ -48,7 +49,7 @@ class item{
 			$time = strtotime($time);
 		}
 		if(is_numeric($time)){
-			if($time <= date::time()){
+			if($time <= Date::time()){
 				$this->lastmodified = $time;
 			}else{
 				throw new \Exception($time);
@@ -62,7 +63,7 @@ class item{
 	}
 	public function setPriority($priority){
 		if($priority > 0 and $priority <= 1){
-			$this->priority = $priority;
+			$this->priority = $priority; 
 		}else{
 			throw new \Exception($priority);
 		}

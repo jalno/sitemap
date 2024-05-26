@@ -1,10 +1,10 @@
 <?php
-namespace packages\sitemap\controllers;
+namespace packages\sitemap\Controllers;
 use \packages\base;
-use \packages\base\packages;
-use \packages\base\json;
-use \packages\sitemap\controller;
-class robots extends controller{
+use \packages\base\Packages;
+use \packages\base\Json;
+use \packages\sitemap\Controller;
+class Robots extends Controller{
 	protected $items = array();
 	public function build(){
 		$this->getRobots();
@@ -21,7 +21,7 @@ class robots extends controller{
 		return $this->response;
 	}
 	public function getRobots(){
-		$packages = packages::get();
+		$packages = Packages::get();
 		foreach($packages as $package){
 			if($robotOption = $package->getOption('robots')){
 				if(is_array($robotOption)){

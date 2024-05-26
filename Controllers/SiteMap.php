@@ -1,19 +1,19 @@
 <?php
-namespace packages\sitemap\controllers;
-use \packages\base\packages;
-use \packages\base\json;
-use \packages\base\http;
-use \packages\base\events;
-use \packages\sitemap\item;
-use \packages\sitemap\controller;
-use \packages\sitemap\events\sitemap as SitemapEvent;
+namespace packages\sitemap\Controllers;
+use \packages\base\Packages;
+use \packages\base\Json;
+use \packages\base\HTTP;
+use \packages\base\Events;
+use \packages\sitemap\Item;
+use \packages\sitemap\Controller;
+use \packages\sitemap\Events\SiteMap as SiteMapEvent;
 use \packages\sitemap\FileException;
 use \packages\sitemap\JsonParseException;
-class sitemap extends controller{
+class SiteMap extends Controller{
 	protected $allowedDomains = [];
 	protected $items = array();
 	public function build(){
-		$this->addAllowedDomain(http::$request['hostname']);
+		$this->addAllowedDomain(HTTP::$request['hostname']);
 		$this->getSiteMaps();
 
 		$this->response->setMimeType('text/xml');
@@ -52,8 +52,8 @@ class sitemap extends controller{
 		return $this->response;
 	}
 	private function sendEvent(){
-		$event = new SitemapEvent();
-		events::trigger($event);
+		$event = new SiteMapEvent();
+		Events::trigger($event);
 		foreach($event->getFiles() as $file){
 			$this->importSitemapFromFile($file);
 		}
@@ -66,7 +66,7 @@ class sitemap extends controller{
 	}
 	public function getSiteMaps(){
 		$this->sendEvent();
-		$packages = packages::get();
+		$packages = Packages::get();
 		foreach($packages as $package){
 			if($sitemapOption = $package->getOption('sitemap')){
 				if(is_array($sitemapOption)){
@@ -86,7 +86,7 @@ class sitemap extends controller{
 									$items = $controllerClass->$method();
 									if(is_array($items)){
 										foreach($items as $item){
-											if($item instanceof item){
+											if($item instanceof Item){
 												if($item->isAllowedByDomain($this->allowedDomains)){
 													$this->items[] = $item;
 												}
@@ -113,11 +113,11 @@ class sitemap extends controller{
 	}
 	public function importSitemapFromFile($file){
 		if(is_file($file) and is_readable($file) and $contents = file_get_contents($file)){
-			if($contents = json\decode($contents)){
+			if($contents = Json\Decode($contents)){
 				if(isset($contents['items'])){
 					if(is_array($contents['items'])){
 						foreach($contents['items'] as $citem){
-							$item = new item();
+							$item = new Item();
 							$item->setURL($citem['url']);
 							if(isset($citem['changefreq'])){
 								$item->SetChangeFreq($citem['changefreq']);

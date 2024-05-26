@@ -1,9 +1,9 @@
 <?php
-namespace packages\sitemap\events;
-use \packages\base\event;
-use \packages\sitemap\item;
+namespace packages\sitemap\Events;
+use \packages\base\Event;
+use \packages\sitemap\Item;
 use \packages\sitemap\FileException;
-class sitemap extends event{
+class SiteMap extends Event{
 	private $files = array();
 	private $items = array();
 	public function fromFile($file){
@@ -12,7 +12,7 @@ class sitemap extends event{
 		}
 		$this->files[] = $file;
 	}
-	public function add(item $item){
+	public function add(Item $item){
 		$this->items[] = $item;
 	}
 	public function getFiles(){
