@@ -13,5 +13,10 @@
                 "library/"
             ]
         }
+    },
+    "extra": {
+        "jalno": {
+            "manifest": "package.json"
+        }
     }
 }

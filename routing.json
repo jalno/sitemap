@@ -1,14 +1,14 @@
 [
 	{
 		"path": "sitemap.xml",
-		"controller": "controllers\\sitemap@build",
+		"controller": "packages/sitemap/Controllers/SiteMap@build",
 		"method":"get",
 		"absolute" : true,
 		"domain":"*"
 	},
 	{
 		"path": "robots.txt",
-		"controller": "controllers\\robots@build",
+		"controller": "packages/sitemap/Controllers/Robots@build",
 		"method":"get",
 		"absolute" : true,
 		"domain":"*"
